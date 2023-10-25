@@ -1,29 +1,40 @@
-import React, { memo, useEffect, useState } from "react";
-import hyRequest from "@/services";
+import React, { memo, useEffect } from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+
+import { fetchHomeDataAction } from "@/store/modules/home";
+import { HomeWrapper } from "./style";
+import HomeBanner from "./c-cpns/home-banner";
+import SectionHeader from "@/components/section-header";
+import RoomItem from "@/components/room-item";
 
 const Home = memo(() => {
-  const [highScore, setHighScore] = useState({});
-
+  // 从redux中获取数据
+  const { goodPriceInfo } = useSelector(
+    (state) => ({
+      goodPriceInfo: state.home.goodPriceInfo,
+    }),
+    shallowEqual
+  );
+  // 派发异步事件，发送网络请求
+  const dispatch = useDispatch();
   useEffect(() => {
-    hyRequest
-      .get({
-        url: "/home/highscore",
-      })
-      .then((res) => {
-        setHighScore(res);
-      });
-  }, []);
+    dispatch(fetchHomeDataAction());
+  }, [dispatch]);
 
   return (
-    <div>
-      <h2>{highScore.title}</h2>
-      <h4>{highScore.subtitle}</h4>
-      <ul>
-        {highScore.list?.map((item) => {
-          return <li key={item.id}>{item.name}</li>;
-        })}
-      </ul>
-    </div>
+    <HomeWrapper>
+      <HomeBanner />
+      <div className="content">
+        <div className="good-price">
+          <SectionHeader title={goodPriceInfo.title} />
+          <ul className="room-list">
+            {goodPriceInfo.list?.slice(0, 8)?.map((item) => {
+              return <RoomItem itemData={item} key={item.id}></RoomItem>;
+            })}
+          </ul>
+        </div>
+      </div>
+    </HomeWrapper>
   );
 });
 

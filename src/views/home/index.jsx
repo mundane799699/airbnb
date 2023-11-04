@@ -4,17 +4,22 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { fetchHomeDataAction } from "@/store/modules/home";
 import { HomeWrapper } from "./style";
 import HomeBanner from "./c-cpns/home-banner";
-import SectionHeader from "@/components/section-header";
-import SectionRooms from "@/components/section-rooms";
+import HomeSectionV1 from "./c-cpns/home-section-v1";
+
+import HomeSectionV2 from "./c-cpns/home-section-v2";
+import { isEmptyObject } from "@/utils";
 
 const Home = memo(() => {
   // 从redux中获取数据
-  const { goodPriceInfo } = useSelector(
+  const { goodPriceInfo, highScoreInfo, discountInfo } = useSelector(
     (state) => ({
       goodPriceInfo: state.home.goodPriceInfo,
+      highScoreInfo: state.home.highScoreInfo,
+      discountInfo: state.home.discountInfo,
     }),
     shallowEqual
   );
+
   // 派发异步事件，发送网络请求
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,10 +30,15 @@ const Home = memo(() => {
     <HomeWrapper>
       <HomeBanner />
       <div className="content">
-        <div className="good-price">
-          <SectionHeader title={goodPriceInfo.title} />
-          <SectionRooms roomList={goodPriceInfo.list} />
-        </div>
+        {isEmptyObject(discountInfo) && (
+          <HomeSectionV2 infoData={discountInfo} />
+        )}
+        {isEmptyObject(goodPriceInfo) && (
+          <HomeSectionV1 infoData={goodPriceInfo} />
+        )}
+        {isEmptyObject(highScoreInfo) && (
+          <HomeSectionV1 infoData={highScoreInfo} />
+        )}
       </div>
     </HomeWrapper>
   );

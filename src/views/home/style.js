@@ -5,8 +5,4 @@ export const HomeWrapper = styled.div`
     width: 1032px;
     margin: 0 auto;
   }
-
-  .good-price {
-    margin-top: 20px;
-  }
 `;

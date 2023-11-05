@@ -11,14 +11,16 @@ import { isEmptyObject } from "@/utils";
 
 const Home = memo(() => {
   // 从redux中获取数据
-  const { goodPriceInfo, highScoreInfo, discountInfo } = useSelector(
-    (state) => ({
-      goodPriceInfo: state.home.goodPriceInfo,
-      highScoreInfo: state.home.highScoreInfo,
-      discountInfo: state.home.discountInfo,
-    }),
-    shallowEqual
-  );
+  const { goodPriceInfo, highScoreInfo, discountInfo, recommendInfo } =
+    useSelector(
+      (state) => ({
+        goodPriceInfo: state.home.goodPriceInfo,
+        highScoreInfo: state.home.highScoreInfo,
+        discountInfo: state.home.discountInfo,
+        recommendInfo: state.home.recommendInfo,
+      }),
+      shallowEqual
+    );
 
   // 派发异步事件，发送网络请求
   const dispatch = useDispatch();
@@ -32,6 +34,9 @@ const Home = memo(() => {
       <div className="content">
         {isEmptyObject(discountInfo) && (
           <HomeSectionV2 infoData={discountInfo} />
+        )}
+        {isEmptyObject(recommendInfo) && (
+          <HomeSectionV2 infoData={recommendInfo} />
         )}
         {isEmptyObject(goodPriceInfo) && (
           <HomeSectionV1 infoData={goodPriceInfo} />

@@ -12,8 +12,8 @@ import classNames from "classnames";
 import IconTriangleArrowTop from "@/assets/svg/icon-triangle-arrow-top";
 
 const PictureBrowser = memo((props) => {
-  const { pictureUrls, closeClick } = props;
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { pictureUrls, closeClick, initialIndex = 0 } = props;
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isNext, setIsNext] = useState(true);
   const [showList, setShowList] = useState(true);
   useEffect(() => {
@@ -117,6 +117,7 @@ const PictureBrowser = memo((props) => {
 PictureBrowser.propTypes = {
   pictureUrls: PropTypes.array,
   closeClick: PropTypes.func,
+  initialIndex: PropTypes.number,
 };
 
 export default PictureBrowser;

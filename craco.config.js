@@ -26,5 +26,9 @@ module.exports = {
       utils: resolve("src/utils"),
       // "@mui/styled-engine": "@mui/styled-engine-sc",
     },
+    configure: (webpackConfig, { env, paths }) => {
+      webpackConfig.output.publicPath = env === "production" ? "/airbnb/" : "/";
+      return webpackConfig;
+    },
   },
 };

@@ -26,9 +26,10 @@ module.exports = {
       utils: resolve("src/utils"),
       // "@mui/styled-engine": "@mui/styled-engine-sc",
     },
-    configure: (webpackConfig, { env, paths }) => {
-      webpackConfig.output.publicPath = env === "production" ? "/airbnb/" : "/";
-      return webpackConfig;
-    },
+    // 部署到自己的服务器上，前面带上/airbnb前缀时把下面的代码注释解开, 比如https://mundane.ink/airbnb
+    // configure: (webpackConfig, { env, paths }) => {
+    //   webpackConfig.output.publicPath = env === "production" ? "/airbnb/" : "/";
+    //   return webpackConfig;
+    // },
   },
 };

@@ -24,6 +24,18 @@ https://mundane.ink/airbnb
 - useSelector
 - useCallback
 
+### 本地运行
+
+```shell
+npm run start
+```
+
+### 打包
+
+```shell
+npm run build
+```
+
 ### 参考
 
 https://github.com/coderwhy/hy_airbnb
